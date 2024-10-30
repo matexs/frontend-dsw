@@ -1,0 +1,42 @@
+<div *ngIf="curso" class="container my-4">
+  <div class="card shadow-sm p-4 mb-4">
+    <h2 class="text-primary">Detalles del Curso: {{ curso.id }}</h2>
+    <p><strong>Tema:</strong> ID: {{ curso.tema.id }}, Nombre: {{ curso.tema.nombre }}, Descripción: {{ curso.tema.descripcion }}.</p>
+    <p><strong>Docente:</strong> ID: {{ curso.docente.id }}, Nombre: {{ curso.docente.nombre }}, Legajo: {{ curso.docente.legajo }}.</p>
+    <p><strong>Fecha de Inicio:</strong> {{ curso.fechaInicio | date }}</p>
+    <p><strong>Fecha de Fin:</strong> {{ curso.fechaFin | date }}</p>
+    <p><strong>Precio:</strong> {{ curso.precio | currency }}</p>
+    <p>
+      <button class="btn btn-primary" [routerLink]="['/cursos']">Volver</button>
+    </p>
+  </div>
+
+  <div class="card shadow-sm p-4 mb-4">
+    <h2 class="text-primary">Alumnos</h2>
+    <ul class="list-group mb-3">
+      <li *ngFor="let alumno of curso.alumnos" class="list-group-item d-flex justify-content-between align-items-center">
+        <span>
+          <strong>ID:</strong> {{ alumno.id }}, 
+          <strong>Nombre:</strong> {{ alumno.nombre }}, 
+          <strong>Fecha de Nacimiento:</strong> {{ alumno.fechaNac | date }}
+        </span>
+        <button class="btn btn-danger btn-sm" (click)="removerAlumnoEnCurso(alumno.id)">Remover</button>
+      </li>
+    </ul>
+    <p *ngIf="!curso.alumnos?.length" class="text-muted">No hay alumnos inscritos en este curso.</p>
+  </div>
+
+  <div class="card shadow-sm p-4">
+    <h3 class="text-primary">Inscribir Alumno</h3>
+    <div class="form-group">
+      <label for="alumnoSelect">Selecciona un Estudiante:</label>
+      <select [(ngModel)]="alumnoId" id="alumnoSelect" class="form-select mb-3">
+        <option *ngFor="let alumno of alumnosDisponibles" [value]="alumno.id | number">
+          {{ alumno.id }} - {{ alumno.nombre }}
+        </option>
+      </select>
+      <button class="btn btn-success" (click)="inscribirAlumnoEnCurso()">Inscribir</button>
+    </div>
+  </div>
+</div>
+

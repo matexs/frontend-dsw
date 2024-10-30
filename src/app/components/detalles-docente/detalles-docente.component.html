@@ -1,0 +1,40 @@
+<div class="container my-4">
+  <div *ngIf="docente" class="card shadow-sm p-4 mb-4">
+    <h2 class="text-primary">Detalles del Docente</h2>
+    <p class="mb-3">
+      <strong>ID:</strong> {{ docente.id }}, 
+      <strong>Nombre:</strong> {{ docente.nombre }}, 
+      <strong>Legajo:</strong> {{ docente.legajo }}.
+    </p>
+    <p>
+      <button class="btn btn-primary" [routerLink]="['/docentes']">Volver</button>
+    </p>
+  </div>
+
+  <div *ngIf="cursosVigentes.length" class="card shadow-sm p-4">
+    <h2 class="text-primary">Cursos Vigentes</h2>
+    <ul class="list-group">
+      <li *ngFor="let curso of cursosVigentes" class="list-group-item mb-3">
+        <h5 class="mb-2"><strong>ID Curso:</strong> {{ curso.id }}</h5>
+        <p><strong>Tema:</strong> ID: {{ curso.tema.id }}, Nombre: {{ curso.tema.nombre }}, Descripción: {{ curso.tema.descripcion }}.</p>
+        <p><strong>Fecha de Inicio:</strong> {{ curso.fechaInicio | date }}</p>
+        <p><strong>Fecha de Fin:</strong> {{ curso.fechaFin | date }}</p>
+        <p><strong>Precio:</strong> {{ curso.precio | currency }}</p>
+        
+        <h6 class="mt-3"><strong>Alumnos:</strong></h6>
+        <ul *ngIf="curso.alumnos?.length" class="list-group">
+          <li *ngFor="let alumno of curso.alumnos" class="list-group-item">
+            <strong>ID:</strong> {{ alumno.id }}, 
+            <strong>Nombre:</strong> {{ alumno.nombre }}, 
+            <strong>Fecha de Nacimiento:</strong> {{ alumno.fechaNac | date }}
+          </li>
+        </ul>
+        <p *ngIf="!curso.alumnos?.length" class="text-muted">No hay alumnos inscritos en este curso.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!cursosVigentes.length" class="alert alert-warning mt-3">
+    No se encontraron cursos vigentes para este docente.
+  </div>
+</div>
