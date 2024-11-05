@@ -1,35 +1,52 @@
 <div class="container my-4">
+
   <div *ngIf="docente" class="card shadow-sm p-4 mb-4">
-    <h2 class="text-primary">Detalles del Docente</h2>
-    <p class="mb-3">
-      <strong>ID:</strong> {{ docente.id }}, 
-      <strong>Nombre:</strong> {{ docente.nombre }}, 
-      <strong>Legajo:</strong> {{ docente.legajo }}.
-    </p>
-    <p>
+    <h2 class="text-primary mb-3">Detalles del Docente</h2>
+    <div class="row mb-3">
+      <div class="col">
+        <p><strong>ID:</strong> {{ docente.id }}</p>
+        <p><strong>Nombre:</strong> {{ docente.nombre }}</p>
+        <p><strong>Legajo:</strong> {{ docente.legajo }}</p>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
       <button class="btn btn-primary" [routerLink]="['/docentes']">Volver</button>
-    </p>
+    </div>
   </div>
 
-  <div *ngIf="cursosVigentes.length" class="card shadow-sm p-4">
-    <h2 class="text-primary">Cursos Vigentes</h2>
+  <div *ngIf="cursosVigentes.length" class="card shadow-sm p-4 mb-4">
+    <h2 class="text-primary mb-3">Cursos Vigentes</h2>
     <ul class="list-group">
-      <li *ngFor="let curso of cursosVigentes" class="list-group-item mb-3">
-        <h5 class="mb-2"><strong>ID Curso:</strong> {{ curso.id }}</h5>
-        <p><strong>Tema:</strong> ID: {{ curso.tema.id }}, Nombre: {{ curso.tema.nombre }}, Descripción: {{ curso.tema.descripcion }}.</p>
-        <p><strong>Fecha de Inicio:</strong> {{ curso.fechaInicio | date }}</p>
-        <p><strong>Fecha de Fin:</strong> {{ curso.fechaFin | date }}</p>
-        <p><strong>Precio:</strong> {{ curso.precio | currency }}</p>
-        
-        <h6 class="mt-3"><strong>Alumnos:</strong></h6>
-        <ul *ngIf="curso.alumnos?.length" class="list-group">
-          <li *ngFor="let alumno of curso.alumnos" class="list-group-item">
-            <strong>ID:</strong> {{ alumno.id }}, 
-            <strong>Nombre:</strong> {{ alumno.nombre }}, 
-            <strong>Fecha de Nacimiento:</strong> {{ alumno.fechaNac | date }}
-          </li>
-        </ul>
-        <p *ngIf="!curso.alumnos?.length" class="text-muted">No hay alumnos inscritos en este curso.</p>
+      <li *ngFor="let curso of cursosVigentes" class="list-group-item mb-3 p-3 shadow-sm rounded">
+        <h5 class="text-secondary mb-2"><strong>ID Curso:</strong> {{ curso.id }}</h5>
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <p><strong>Tema:</strong></p>
+            <ul class="list-unstyled ms-3">
+              <li><strong>ID:</strong> {{ curso.tema.id }}</li>
+              <li><strong>Nombre:</strong> {{ curso.tema.nombre }}</li>
+              <li><strong>Descripción:</strong> {{ curso.tema.descripcion }}</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Fecha de Inicio:</strong> {{ curso.fechaInicio | date }}</p>
+            <p><strong>Fecha de Fin:</strong> {{ curso.fechaFin | date }}</p>
+            <p><strong>Precio:</strong> {{ curso.precio | currency }}</p>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h6 class="text-secondary"><strong>Alumnos:</strong></h6>
+          <ul *ngIf="curso.alumnos?.length" class="list-group mb-2">
+            <li *ngFor="let alumno of curso.alumnos" class="list-group-item d-flex justify-content-between align-items-center">
+              <span>
+                <strong>ID:</strong> {{ alumno.id }}
+                <strong>Nombre:</strong> {{ alumno.nombre }}
+                <strong>Fecha de Nacimiento:</strong> {{ alumno.fechaNac | date }}
+              </span>
+            </li>
+          </ul>
+          <p *ngIf="!curso.alumnos?.length" class="text-muted text-center">No hay alumnos inscritos en este curso.</p>
+        </div>
       </li>
     </ul>
   </div>
